@@ -1,12 +1,17 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:login_pro/auth_controller.dart';
+
+var emailController = TextEditingController();
+var passwordController = TextEditingController();
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    
     List<String> img = [
       'Assests/images/g.png',
       "Assests/images/t.png",
@@ -66,6 +71,7 @@ class SignUpPage extends StatelessWidget {
                       ),
                     ]),
                 child: TextField(
+                  controller: emailController,
                   decoration: InputDecoration(
                     hintText: "Email",
                     focusedBorder: OutlineInputBorder(
@@ -101,6 +107,11 @@ class SignUpPage extends StatelessWidget {
                       ),
                     ]),
                 child: TextField(
+                  // get password
+                  controller: passwordController,
+                  obscureText: true,
+                  ////
+
                   decoration: InputDecoration(
                     hintText: "Password",
                     focusedBorder: OutlineInputBorder(
@@ -143,43 +154,48 @@ class SignUpPage extends StatelessWidget {
         SizedBox(
           height: h * 0.03,
         ),
-        Container(
-          width: w * 0.5,
-          height: h * 0.08,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30),
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: AssetImage(
-                'Assests/images/loginbtn.png',
+        GestureDetector(
+          onTap: () {
+            AuthController.instance.register(
+                emailController.text.trim(), passwordController.text.trim());
+          },
+          child: Container(
+            width: w * 0.5,
+            height: h * 0.08,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30),
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: AssetImage(
+                  'Assests/images/loginbtn.png',
+                ),
               ),
             ),
-          ),
-          child: Center(
-            child: Text(
-              "Sign up",
-              style: TextStyle(
-                fontSize: h * 0.035,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+            child: Center(
+              child: Text(
+                "Sign up",
+                style: TextStyle(
+                  fontSize: h * 0.035,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),
         ),
-        SizedBox(height: h*0.02,),
+        SizedBox(
+          height: h * 0.02,
+        ),
         RichText(
-          
           text: TextSpan(
-            recognizer: TapGestureRecognizer()..onTap = ()=> Get.back(),
+            recognizer: TapGestureRecognizer()..onTap = () => Get.back(),
             text: "Have an account?",
             style: TextStyle(
               fontSize: 20,
               color: Colors.grey[500],
-
             ),
-            
           ),
-         ),
+        ),
         SizedBox(
           height: h * 0.04,
         ),
@@ -193,30 +209,25 @@ class SignUpPage extends StatelessWidget {
           ),
         ),
         Wrap(
-          children: 
-            List<Widget>.generate(
-  3,
-  (index) {
-    return  Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: CircleAvatar(
-        radius: 30,
-        backgroundColor: Colors.grey[500],
-        child: CircleAvatar(
-            radius: 25,
-            backgroundImage: AssetImage(
-              img[index],
-            ),
+          children: List<Widget>.generate(
+            3,
+            (index) {
+              return Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: CircleAvatar(
+                  radius: 30,
+                  backgroundColor: Colors.grey[500],
+                  child: CircleAvatar(
+                    radius: 25,
+                    backgroundImage: AssetImage(
+                      img[index],
+                    ),
+                  ),
+                ),
+              );
+            },
           ),
-      ),
-    );
-    
-  },
-),
-
-          
         ),
-
       ]),
     );
   }

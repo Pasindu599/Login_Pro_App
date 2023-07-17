@@ -1,10 +1,15 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:login_pro/auth_controller.dart';
 import 'package:login_pro/screens/login_page.dart';
 import 'package:get/get.dart';
 import 'package:login_pro/screens/signup_page.dart';
 import 'package:login_pro/screens/welcome_page.dart';
 
-void main() {
+Future<void> main() async {
+  // to wait firbase 
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp().then((value)=>Get.put(AuthController()));
   runApp(const MyApp());
 }
 
@@ -39,4 +44,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
